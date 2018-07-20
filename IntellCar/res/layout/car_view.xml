@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/button_car">
+    <Button
+        android:id="@+id/but_go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="280dp"
+        android:text="前进" />
+
+    <Button
+        android:id="@+id/but_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="180dp"
+        android:text="后退" />
+
+    <Button
+        android:id="@+id/but_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/but_back"
+        android:layout_marginBottom="46dp"
+        android:layout_toLeftOf="@+id/but_go"
+        android:text="向左" />
+
+    <Button
+        android:id="@+id/but_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/but_left"
+        android:layout_toRightOf="@+id/but_go"
+        android:text="向右" />
+    
+
+</RelativeLayout>
