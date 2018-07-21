@@ -16,7 +16,7 @@ import android.os.Bundle;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 /**
- * Í¨¹ý´«¸ÐÆ÷¿ØÖÆÐ¡³µÒÆ¶¯
+ * é€šè¿‡ä¼ æ„Ÿå™¨æŽ§åˆ¶å°è½¦ç§»åŠ¨
  * @author 17976
  *
  */
@@ -48,7 +48,7 @@ public class SensorActivity extends Activity implements SensorEventListener{
 
 		sr = sm.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 
-		sb.append("·½Ïò´«¸ÐÆ÷Ãû×Ö:" + sr.getName() + "ÀàÐÍ" + sr.getType() + "\n");
+		sb.append("æ–¹å‘ä¼ æ„Ÿå™¨åå­—:" + sr.getName() + "ç±»åž‹" + sr.getType() + "\n");
 		tv_show.setText(sb.toString());
 	}
 
@@ -72,38 +72,42 @@ public class SensorActivity extends Activity implements SensorEventListener{
 		if (type == Sensor.TYPE_ORIENTATION) {
 			float[] f = event.values;
 
-			tv_x.setText("X:" + f[0]);
-			tv_y.setText("Y:" + f[1]);
-			tv_z.setText("Z:" + f[2]);
+			float x=f[0];//æ–¹ä½ï¼šä¸œå—è¥¿åŒ—
+			float y=f[1];//yè½´
+			float z=f[2];//zè½´
 
-			if ((f[1] > 0) && (f[1] < 180) && (f[2] > 0) && (f[2] < 14)) {// v[1] 0~180 ÏòÇ°
-				tv_show.setText("ÏòÇ°");
-				rl.setBackgroundColor(Color.parseColor("#FF99FF"));//·Ûºì
+			tv_x.setText("X:" + x);
+			tv_y.setText("Y:" + y);
+			tv_z.setText("Z:" + z);
+			
+			if (y>10&&((z>0&&y>z)||(z<0&&y>-z))) {// å‘å‰
+				tv_show.setText("å‘å‰");
+				rl.setBackgroundColor(Color.parseColor("#FF99FF"));//ç²‰çº¢
 				commands = (new byte[] { (byte) 0xff, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0xff });
-//				sendcmd("ÏòÇ°".getBytes());
+//				sendcmd("å‘å‰".getBytes());
 				sendcmd(commands);
 
 			}
-			if ((f[1] >= -180) && (f[1] < 0) && (f[2] > -1) && (f[2] <-7)) {// v[1] -180~0 Ïòºó
-				tv_show.setText("Ïòºó");
-				rl.setBackgroundColor(Color.parseColor("#99CCFF"));//ÌìÀ¶É«
+			if (y<-10&&(z>0&&-y>z)||(z<0&&y<z)) {// å‘åŽ
+				tv_show.setText("å‘åŽ");
+				rl.setBackgroundColor(Color.parseColor("#99CCFF"));//å¤©è“è‰²
 				commands = (new byte[] { (byte) 0xff, (byte) 0x00, (byte) 0x02, (byte) 0x00, (byte) 0xff });
 				sendcmd(commands);
 			}
-			if ((f[1] >= -180) && (f[1] < -10) && (f[2] > 0) && (f[2] <= 90)) {// v[2]: 0~90 Ïò×ó
-				tv_show.setText("Ïò×ó");
-				rl.setBackgroundColor(Color.parseColor("#FFFF66"));//»ÆÉ«
-				commands = (new byte[] { (byte) 0xff, (byte) 0x00, (byte) 0x02, (byte) 0x00, (byte) 0xff });
+			if (z>=10&&((y>0&&y<z)||(y<0&&-y<z))) {//  å‘å·¦
+				tv_show.setText("å‘å·¦");
+				rl.setBackgroundColor(Color.parseColor("#FFFF66"));//é»„è‰²
+				commands = (new byte[] { (byte) 0xff, (byte) 0x00, (byte) 0x03, (byte) 0x00, (byte) 0xff });
 				sendcmd(commands);
 			}
-			if ((f[1] >-180) && (f[1] < -7) && (f[2] >= -28) && (f[2] < 0)) {// v[2] -90~0 ÏòÓÒ
-				tv_show.setText("ÏòÓÒ");
-				rl.setBackgroundColor(Color.parseColor("#CCFFCC"));//Ç³ÂÌÉ«
+			if (z<=-10&&((y<0&&y>z)||(y>0&&y<-z))) {//  å‘å³
+				tv_show.setText("å‘å³");
+				rl.setBackgroundColor(Color.parseColor("#CCFFCC"));//æµ…ç»¿è‰²
 				commands = (new byte[] { (byte) 0xff, (byte) 0x00, (byte) 0x04, (byte) 0x00, (byte) 0xff });
 				sendcmd(commands);
 			}
-			if ((f[1] > -10) && (f[1] < 0)) {
-				tv_show.setText("ÔÝÍ£");
+			if ((-10<y&&y<10)&&(-10<z&&z<10)) {
+				tv_show.setText("æš‚åœ");
 				rl.setBackgroundDrawable(getWallpaper());
 				commands = (new byte[] { (byte) 0xff, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0xff });
 				sendcmd(commands);
